@@ -31,48 +31,110 @@ class CSPageControl: UIControl {
     var dotSpacing : CGFloat                = 14.0
     var dotSize : CGFloat                   = 6.0
     var activeStyle : CSPageControlStyle    = CSPageControlStyle.Filled
-    var inactiveStyle : CSPageControlStyle  = CSPageControlStyle.Filled
+    var inactiveStyle : CSPageControlStyle  = CSPageControlStyle.Outline
     var activeColor : UIColor               = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
     var inactiveColor : UIColor             = UIColor(red:0.796,  green:0.816,  blue:0.827, alpha:1)
     var activeImage : UIImage?
     var inactiveImage : UIImage?
     
     //MARK: Lifecycle
-    init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle) {
+    convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle) {
+        self.init(frame: CGRect.zeroRect)
         self.activeStyle = activeStyle
         self.inactiveStyle = inactiveStyle
-        
-        super.init(frame: CGRect.zeroRect)
     }
     
-    init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle, dotSize: CGFloat, dotSpacing: CGFloat) {
+    convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle, dotSize: CGFloat, dotSpacing: CGFloat) {
+        self.init(frame: CGRect.zeroRect)
         self.activeStyle = activeStyle
         self.inactiveStyle = inactiveStyle
         self.dotSize = dotSize
         self.dotSpacing = dotSpacing
-        
-        super.init(frame: CGRect.zeroRect)
     }
     
-    init(activeImage: UIImage, inactiveImage: UIImage) {
+    convenience init(activeImage: UIImage, inactiveImage: UIImage) {
+        self.init(frame: CGRect.zeroRect)
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
         
-        super.init(frame: CGRect.zeroRect)
+        var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
+        var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
+        self.dotSize = max(activeSize, inactiveSize)
     }
     
-    init(activeImage: UIImage, inactiveImage: UIImage, dotSpacing: CGFloat) {
+    convenience init(activeImage: UIImage, inactiveImage: UIImage, dotSpacing: CGFloat) {
+        self.init(frame: CGRect.zeroRect)
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
         self.dotSpacing = dotSpacing
         
-        super.init(frame: CGRect.zeroRect)
+        var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
+        var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
+        self.dotSize = max(activeSize, inactiveSize)
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clearColor()
+    }
+    
+    //MARK: Drawing
+    override func drawRect(rect: CGRect) {
+        var context : CGContextRef = UIGraphicsGetCurrentContext()
+        CGContextSaveGState(context)
+        CGContextSetAllowsAntialiasing(context, true)
+        
+        var currentBounds : CGRect = self.bounds
+        var totalWidth : CGFloat = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
+        var x : CGFloat = CGRectGetMidX(currentBounds) - (totalWidth / 2)
+        var y : CGFloat = CGRectGetMidY(currentBounds) - (dotSize / 2)
+        
+        for (var i = 0; i < numberOfPages; i++) {
+            var dotFrame : CGRect = CGRectMake(x, y, dotSize, dotSize)
+            if (i == currentPage) {
+                switch activeStyle {
+                case .Filled:
+                    CGContextSetFillColorWithColor(context, activeColor.CGColor)
+                    CGContextFillEllipseInRect(context, CGRectInset(dotFrame, -0.5, -0.5))
+                    break
+                    
+                case .Outline:
+                    CGContextSetStrokeColorWithColor(context, activeColor.CGColor)
+                    CGContextStrokeEllipseInRect(context, dotFrame)
+                    break
+                    
+                case .Image:
+                    // need image implementation
+                    break
+                }
+            } else {
+                switch inactiveStyle {
+                case .Filled:
+                    CGContextSetFillColorWithColor(context, inactiveColor.CGColor)
+                    CGContextFillEllipseInRect(context, CGRectInset(dotFrame, -0.5, -0.5))
+                    break
+                    
+                case .Outline:
+                    CGContextSetStrokeColorWithColor(context, inactiveColor.CGColor)
+                    CGContextStrokeEllipseInRect(context, dotFrame)
+                    break
+                    
+                case .Image:
+                    // need image implementation
+                    break
+                }
+            }
+            x += dotSize + dotSpacing
+        }
+        
+        
+        // restore the context
+        CGContextRestoreGState(context)
+    }
     
     //MARK: Utilities
     func updateCurrentPageDisplay() {
