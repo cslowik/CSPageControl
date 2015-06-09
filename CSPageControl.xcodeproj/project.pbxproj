@@ -13,6 +13,7 @@
 		8382B44F1B26BEDC00BA75E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8382B44E1B26BEDC00BA75E2 /* Images.xcassets */; };
 		8382B4521B26BEDC00BA75E2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8382B4501B26BEDC00BA75E2 /* LaunchScreen.xib */; };
 		8382B45E1B26BEDC00BA75E2 /* CSPageControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382B45D1B26BEDC00BA75E2 /* CSPageControlTests.swift */; };
+		8382B4681B26C12500BA75E2 /* CSPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382B4671B26C12500BA75E2 /* CSPageControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		8382B4571B26BEDC00BA75E2 /* CSPageControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSPageControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8382B45C1B26BEDC00BA75E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8382B45D1B26BEDC00BA75E2 /* CSPageControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSPageControlTests.swift; sourceTree = "<group>"; };
+		8382B4671B26C12500BA75E2 /* CSPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CSPageControl.swift; path = Classes/CSPageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		8382B4391B26BEDC00BA75E2 = {
 			isa = PBXGroup;
 			children = (
+				8382B4671B26C12500BA75E2 /* CSPageControl.swift */,
 				8382B4441B26BEDC00BA75E2 /* CSPageControl */,
 				8382B45A1B26BEDC00BA75E2 /* CSPageControlTests */,
 				8382B4431B26BEDC00BA75E2 /* Products */,
@@ -214,6 +217,7 @@
 			files = (
 				8382B44A1B26BEDC00BA75E2 /* ViewController.swift in Sources */,
 				8382B4481B26BEDC00BA75E2 /* AppDelegate.swift in Sources */,
+				8382B4681B26C12500BA75E2 /* CSPageControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
