@@ -8,14 +8,46 @@
 
 import UIKit
 
-class CSPageControl: UIPageControl {
+enum CSPageControlStyle : Int {
+    case Filled     = 0
+    case Outline    = 1
+    case Image      = 2
+}
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+class CSPageControl: UIControl {
+    
+    //MARK: Page Control Properties
+    var numberOfPages : NSInteger
+    var currentPage : NSInteger
+    var hidesForSinglePage : Bool
+    var defersCurrentPageDisplay : Bool
+    
+    //MARK: CSPageControl Properties
+    var activeStyle : CSPageControlStyle
+    var inactiveStyle : CSPageControlStyle
+    var activeColor : UIColor
+    var inactiveColor : UIColor
+    var activeImage : UIImage
+    var inactiveImage : UIImage
+    var dotSpacing : CGFloat
+    var dotSize : CGFloat
+    
+    //MARK: Lifecycle
+    
+    
+    //MARK: Utilities
+    func updateCurrentPageDisplay() {
+        // if defersCurrentPageDisplay is set to true, need to redraw
+        if (defersCurrentPageDisplay) {
+            self.setNeedsDisplay()
+        }
     }
-    */
+    
+    func sizeForNumberOfPages(numPages: NSInteger) -> CGSize {
+        var floatPages :CGFloat = CGFloat(numPages)
+        var width : CGFloat = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
+        var height : CGFloat = max(44, dotSize + 4)
+        return CGSize(width: width, height: height)
+    }
 
 }
