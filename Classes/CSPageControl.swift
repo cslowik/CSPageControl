@@ -36,6 +36,7 @@ class CSPageControl: UIControl {
     //MARK: CSPageControl Properties
     var dotSpacing : CGFloat                = 14.0
     var dotSize : CGFloat                   = 6.0
+    var lineWidth : CGFloat                 = 1.0
     var activeStyle : CSPageControlStyle    = CSPageControlStyle.Filled
     var inactiveStyle : CSPageControlStyle  = CSPageControlStyle.Outline
     var activeColor : UIColor               = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
@@ -109,6 +110,7 @@ class CSPageControl: UIControl {
                     break
                     
                 case .Outline:
+                    CGContextSetLineWidth(context, lineWidth)
                     CGContextSetStrokeColorWithColor(context, activeColor.CGColor)
                     CGContextStrokeEllipseInRect(context, dotFrame)
                     break
