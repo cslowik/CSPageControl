@@ -9,10 +9,18 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var pageIndicator : CSPageControl = CSPageControl(activeStyle: CSPageControlStyle.Filled, inactiveStyle: CSPageControlStyle.Outline)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        pageIndicator.numberOfPages = 4
+        self.view.addSubview(pageIndicator)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        pageIndicator.center = self.view.center
     }
 
     override func didReceiveMemoryWarning() {

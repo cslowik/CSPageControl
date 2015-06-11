@@ -22,7 +22,13 @@ enum CSPageControlImage : String {
 class CSPageControl: UIControl {
     
     //MARK: Page Control Properties
-    var numberOfPages : NSInteger           = 1
+    var numberOfPages : NSInteger           = 1 {
+        didSet {
+            var newSize : CGSize = self.sizeForNumberOfPages()
+            self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: newSize.width, height: newSize.height)
+            self.updateCurrentPageDisplay()
+        }
+    }
     var currentPage : NSInteger             = 0
     var hidesForSinglePage : Bool           = false
     var defersCurrentPageDisplay : Bool     = false
