@@ -64,6 +64,9 @@ class CSPageControl: UIControl {
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
         
+        self.activeStyle = CSPageControlStyle.Image
+        self.inactiveStyle = CSPageControlStyle.Image
+        
         var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
         var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
         self.dotSize = max(activeSize, inactiveSize)
@@ -73,10 +76,13 @@ class CSPageControl: UIControl {
         self.init(frame: CGRect.zeroRect)
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
-        self.dotSpacing = dotSpacing
+        self.activeStyle = CSPageControlStyle.Image
+        self.inactiveStyle = CSPageControlStyle.Image
         
         var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
         var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
+        
+        self.dotSpacing = dotSpacing
         self.dotSize = max(activeSize, inactiveSize)
     }
 
@@ -116,8 +122,7 @@ class CSPageControl: UIControl {
                     break
                     
                 case .Image:
-                    // need image implementation
-                    break
+                    activeImage!.drawInRect(dotFrame)
                 }
             } else {
                 switch inactiveStyle {
@@ -132,7 +137,7 @@ class CSPageControl: UIControl {
                     break
                     
                 case .Image:
-                    // need image implementation
+                    inactiveImage!.drawInRect(dotFrame)
                     break
                 }
             }
