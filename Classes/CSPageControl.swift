@@ -145,10 +145,26 @@ class CSPageControl: UIControl {
     }
     
     func sizeForNumberOfPages() -> CGSize {
-        var floatPages :CGFloat = CGFloat(numberOfPages)
+        var floatPages : CGFloat = CGFloat(numberOfPages)
         var width : CGFloat = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
         var height : CGFloat = max(44, dotSize + 4)
         return CGSize(width: width, height: height)
     }
 
+    //MARK: Touch Handling
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        // find touch location
+        var theTouch : UITouch = touches.first as! UITouch
+        var touchLocation : CGPoint = theTouch.locationInView(self)
+        
+        // check whether the touch is in the right or left hand-side of the control
+        if (touchLocation.x < (self.bounds.size.width / 2)) {
+            self.currentPage = (self.currentPage > 0) ? self.currentPage-- : 0;
+        }
+        else {
+            self.currentPage = (self.currentPage < (numberOfPages - 1)) ? self.currentPage++ : 0;
+        }
+        self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+    }
+    
 }
