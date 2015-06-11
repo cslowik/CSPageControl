@@ -39,8 +39,8 @@ CSPageControl.activeStyle     // style of active dot
 CSPageControl.inactiveStyle   // style of inactive dot
 CSPageControl.activeColor     // color of active dot
 CSPageControl.inactiveColor   // color of inactive dots
-CSPageControl.activeImage     // image for active dot
-CSPageControl.inactiveImage   // image for inactive dots
+CSPageControl.activeImage     // image for active dot (optional)
+CSPageControl.inactiveImage   // image for inactive dots (optional)
 
 CSPageControl.hidesForSinglePage        // carryover from UIPageControl
 CSPageControl.defersCurrentPageDisplay  // carryover from UIPageControl
