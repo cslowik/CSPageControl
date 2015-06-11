@@ -10,13 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var pageIndicator : CSPageControl = CSPageControl() //CSPageControl(activeStyle: CSPageControlStyle.Filled, inactiveStyle: CSPageControlStyle.Outline)
-
+    var pageIndicator : CSPageControl = CSPageControl(activeImage: UIImage(named: CSPageControlImage.StarFilled.rawValue)!, inactiveImage: UIImage(named: CSPageControlImage.StarOutline.rawValue)!)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         pageIndicator.numberOfPages = 5
-        pageIndicator.
         self.view.addSubview(pageIndicator)
     }
     
