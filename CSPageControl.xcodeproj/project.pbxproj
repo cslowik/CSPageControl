@@ -415,6 +415,7 @@
 				8382B4631B26BEDC00BA75E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8382B4641B26BEDC00BA75E2 /* Build configuration list for PBXNativeTarget "CSPageControlTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +424,7 @@
 				8382B4661B26BEDC00BA75E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

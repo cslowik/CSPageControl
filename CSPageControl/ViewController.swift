@@ -10,24 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var pageIndicator : CSPageControl = CSPageControl(activeImage: UIImage(named: CSPageControlImage.StarFilled.rawValue)!, inactiveImage: UIImage(named: CSPageControlImage.StarOutline.rawValue)!)
+    @IBOutlet weak var activeStylePicker: UISegmentedControl!
+    @IBOutlet weak var inactiveStylePicker: UISegmentedControl!
+    @IBOutlet weak var strokeWidthSlider: UISlider!
+    
+    var pageControl : CSPageControl = CSPageControl(activeImage: UIImage(named: "starFilled")!, inactiveImage: UIImage(named: "starOutline")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        pageIndicator.numberOfPages = 5
-        self.view.addSubview(pageIndicator)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        pageIndicator.center = self.view.center
+        pageControl.numberOfPages = 5
+        pageControl.dotSize = 12
+        pageControl.activeStyle = CSPageControlStyle.Filled
+        pageControl.inactiveStyle = CSPageControlStyle.Outline
+        self.view.addSubview(pageControl)
     }
 
+    override func viewDidLayoutSubviews() {
+        pageControl.center = CGPoint(x: self.view.center.x, y: 100)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
