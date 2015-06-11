@@ -29,6 +29,7 @@ There are a few other properties that can be changed or accessed, but these are 
 ```
 CSPageControl.numberOfPages   // max pages. control adjusts size based on this property
 CSPageControl.currentPage     // the current page
+CSPageControl.hidesForSinglePage        // carryover from UIPageControl
 CSPageControl.defersCurrentPageDisplay  // carryover from UIPageControl
 
 CSPageControl.dotSpacing      // space between the dots - calculated from edges of dots
