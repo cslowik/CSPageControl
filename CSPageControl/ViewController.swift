@@ -23,6 +23,10 @@ class ViewController: UIViewController {
         pageControl.activeStyle = CSPageControlStyle.Filled
         pageControl.inactiveStyle = CSPageControlStyle.Outline
         self.view.addSubview(pageControl)
+        
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipeLeft")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
     }
 
     override func viewDidLayoutSubviews() {
@@ -33,6 +37,13 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: Gesture Recognition
+    func didSwipeLeft() {
+        println("swiped left")
+    }
+    
+    //MARK: IBActions
 
     @IBAction func didTapActiveStyle(sender: AnyObject) {
         switch activeStylePicker.selectedSegmentIndex {
@@ -70,7 +81,6 @@ class ViewController: UIViewController {
     
     @IBAction func strokeWIdthChanged(sender: AnyObject) {
         pageControl.lineWidth = CGFloat(strokeWidthSlider.value)
-        println(pageControl.lineWidth)
         pageControl.setNeedsDisplay()
     }
 }
