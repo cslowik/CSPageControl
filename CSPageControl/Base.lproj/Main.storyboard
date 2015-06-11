@@ -24,6 +24,9 @@
                                     <segment title="Outline"/>
                                     <segment title="Image"/>
                                 </segments>
+                                <connections>
+                                    <action selector="didTapActiveStyle:" destination="BYZ-38-t0r" eventType="valueChanged" id="HNa-ts-XME"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfY-Df-ukv">
                                 <rect key="frame" x="16" y="341" width="91" height="21"/>
@@ -38,6 +41,9 @@
                                     <segment title="Outline"/>
                                     <segment title="Image"/>
                                 </segments>
+                                <connections>
+                                    <action selector="didTapInactiveStyle:" destination="BYZ-38-t0r" eventType="valueChanged" id="BnJ-Im-XD2"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inactive Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0s-19-MmK">
                                 <rect key="frame" x="16" y="426" width="103" height="21"/>
@@ -53,6 +59,9 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="0Jr-g4-RJz">
                                 <rect key="frame" x="14" y="540" width="572" height="31"/>
+                                <connections>
+                                    <action selector="strokeWIdthChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="4kp-ng-Kp2"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

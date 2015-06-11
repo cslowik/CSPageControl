@@ -118,7 +118,7 @@ class CSPageControl: UIControl {
                 case .Outline:
                     CGContextSetLineWidth(context, lineWidth)
                     CGContextSetStrokeColorWithColor(context, activeColor.CGColor)
-                    CGContextStrokeEllipseInRect(context, dotFrame)
+                    CGContextStrokeEllipseInRect(context, CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
                     break
                     
                 case .Image:
@@ -132,8 +132,9 @@ class CSPageControl: UIControl {
                     break
                     
                 case .Outline:
+                    CGContextSetLineWidth(context, lineWidth)
                     CGContextSetStrokeColorWithColor(context, inactiveColor.CGColor)
-                    CGContextStrokeEllipseInRect(context, dotFrame)
+                    CGContextStrokeEllipseInRect(context, CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
                     break
                     
                 case .Image:

@@ -34,5 +34,44 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func didTapActiveStyle(sender: AnyObject) {
+        switch activeStylePicker.selectedSegmentIndex {
+        case 0:
+            pageControl.activeStyle = CSPageControlStyle.Filled
+            break
+        case 1:
+            pageControl.activeStyle = CSPageControlStyle.Outline
+            break
+        case 2:
+            pageControl.activeStyle = CSPageControlStyle.Image
+            break
+        default:
+            break
+        }
+        pageControl.setNeedsDisplay()
+    }
+    
+    @IBAction func didTapInactiveStyle(sender: AnyObject) {
+        switch inactiveStylePicker.selectedSegmentIndex {
+        case 0:
+            pageControl.inactiveStyle = CSPageControlStyle.Filled
+            break
+        case 1:
+            pageControl.inactiveStyle = CSPageControlStyle.Outline
+            break
+        case 2:
+            pageControl.inactiveStyle = CSPageControlStyle.Image
+            break
+        default:
+            break
+        }
+        pageControl.setNeedsDisplay()
+    }
+    
+    @IBAction func strokeWIdthChanged(sender: AnyObject) {
+        pageControl.lineWidth = CGFloat(strokeWidthSlider.value)
+        println(pageControl.lineWidth)
+        pageControl.setNeedsDisplay()
+    }
 }
 
