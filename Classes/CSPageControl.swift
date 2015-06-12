@@ -152,8 +152,7 @@ class CSPageControl: UIControl {
     
     //MARK: Utilities
     func updateCurrentPageDisplay() {
-        // if defersCurrentPageDisplay is set to true, need to redraw
-        if (defersCurrentPageDisplay) {
+        if (!defersCurrentPageDisplay) {
             self.setNeedsDisplay()
         }
     }
@@ -164,6 +163,17 @@ class CSPageControl: UIControl {
         var height : CGFloat = max(44, dotSize + 4)
         return CGSize(width: width, height: height)
     }
+    
+    //MARK: Page Changers
+    func incrementPage() {
+        currentPage = (currentPage < (numberOfPages - 1)) ? (currentPage + 1) : (numberOfPages - 1)
+        updateCurrentPageDisplay()
+    }
+    
+    func decrementPage() {
+        currentPage = (currentPage > 0) ? (currentPage - 1) : 0
+        updateCurrentPageDisplay()
+    }
 
     //MARK: Touch Handling
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -171,12 +181,12 @@ class CSPageControl: UIControl {
         var theTouch : UITouch = touches.first as! UITouch
         var touchLocation : CGPoint = theTouch.locationInView(self)
         
-        // check whether the touch is in the right or left hand-side of the control
+        // check whether the touch is on the right or left
         if (touchLocation.x < (self.bounds.size.width / 2)) {
-            self.currentPage = (self.currentPage > 0) ? self.currentPage-- : 0;
+            currentPage = (currentPage > 0) ? currentPage-- : numberOfPages
         }
         else {
-            self.currentPage = (self.currentPage < (numberOfPages - 1)) ? self.currentPage++ : 0;
+            currentPage = (currentPage < (numberOfPages - 1)) ? currentPage++ : 0
         }
         self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
     }

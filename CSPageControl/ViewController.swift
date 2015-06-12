@@ -24,9 +24,12 @@ class ViewController: UIViewController {
         pageControl.inactiveStyle = CSPageControlStyle.Outline
         self.view.addSubview(pageControl)
         
-        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipeLeft")
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeLeft)
+        self.view.addGestureRecognizer(swipeRight)
     }
 
     override func viewDidLayoutSubviews() {
@@ -39,8 +42,20 @@ class ViewController: UIViewController {
     }
     
     //MARK: Gesture Recognition
-    func didSwipeLeft() {
-        println("swiped left")
+    func didSwipe(sender: UIGestureRecognizer) {
+        if (sender.isMemberOfClass(UISwipeGestureRecognizer)) {
+            switch ((sender as! UISwipeGestureRecognizer).direction) {
+            case (UISwipeGestureRecognizerDirection.Left):
+                pageControl.incrementPage()
+                break
+            case (UISwipeGestureRecognizerDirection.Right):
+                pageControl.decrementPage()
+                break
+            default:
+                break
+            }
+            pageControl.updateCurrentPageDisplay()
+        }
     }
     
     //MARK: IBActions
