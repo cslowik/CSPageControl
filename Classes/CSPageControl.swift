@@ -31,7 +31,7 @@ class CSPageControl: UIControl {
     //MARK: Page Control Properties
     var numberOfPages: NSInteger           = 1 {
         didSet {
-            var newSize: CGSize = self.sizeForNumberOfPages()
+            var newSize = self.sizeForNumberOfPages()
             self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: newSize.width, height: newSize.height)
             self.updateCurrentPageDisplay()
         }
@@ -87,8 +87,8 @@ class CSPageControl: UIControl {
         self.activeStyle = CSPageControlStyle.Image
         self.inactiveStyle = CSPageControlStyle.Image
         
-        var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
-        var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
+        var activeSize = max(activeImage.size.width, activeImage.size.height)
+        var inactiveSize = max(inactiveImage.size.width, inactiveImage.size.height)
         
         self.dotSpacing = dotSpacing
         self.dotSize = max(activeSize, inactiveSize)
@@ -105,28 +105,28 @@ class CSPageControl: UIControl {
     
     //MARK: Drawing
     override func drawRect(rect: CGRect) {
-        var context : CGContextRef = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(context)
-        CGContextSetAllowsAntialiasing(context, true)
-        
-        var currentBounds : CGRect = self.bounds
-        var totalWidth : CGFloat = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
-        var x : CGFloat = CGRectGetMidX(currentBounds) - (totalWidth / 2)
-        var y : CGFloat = CGRectGetMidY(currentBounds) - (dotSize / 2)
+        var currentBounds = self.bounds
+        var totalWidth = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
+        var x = CGRectGetMidX(currentBounds) - (totalWidth / 2)
+        var y = CGRectGetMidY(currentBounds) - (dotSize / 2)
         
         for (var i = 0; i < numberOfPages; i++) {
-            var dotFrame : CGRect = CGRectMake(x, y, dotSize, dotSize)
+            var dotFrame = CGRectMake(x, y, dotSize, dotSize)
             if (i == currentPage) {
                 switch activeStyle {
                 case .Filled:
-                    CGContextSetFillColorWithColor(context, activeColor.CGColor)
-                    CGContextFillEllipseInRect(context, CGRectInset(dotFrame, -0.5, -0.5))
+                    // Draw filled circle
+                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
+                    activeColor.setFill()
+                    circlePath.fill()
                     break
                     
                 case .Outline:
-                    CGContextSetLineWidth(context, lineWidth)
-                    CGContextSetStrokeColorWithColor(context, activeColor.CGColor)
-                    CGContextStrokeEllipseInRect(context, CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    // Draw stroked circle
+                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    activeColor.setStroke()
+                    circlePath.lineWidth = lineWidth
+                    circlePath.stroke()
                     break
                     
                 case .Image:
@@ -135,14 +135,18 @@ class CSPageControl: UIControl {
             } else {
                 switch inactiveStyle {
                 case .Filled:
-                    CGContextSetFillColorWithColor(context, inactiveColor.CGColor)
-                    CGContextFillEllipseInRect(context, CGRectInset(dotFrame, -0.5, -0.5))
+                    // Draw filled circle
+                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
+                    inactiveColor.setFill()
+                    circlePath.fill()
                     break
                     
                 case .Outline:
-                    CGContextSetLineWidth(context, lineWidth)
-                    CGContextSetStrokeColorWithColor(context, inactiveColor.CGColor)
-                    CGContextStrokeEllipseInRect(context, CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    // Draw stroked circle
+                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    inactiveColor.setStroke()
+                    circlePath.lineWidth = lineWidth
+                    circlePath.stroke()
                     break
                     
                 case .Image:
@@ -152,9 +156,6 @@ class CSPageControl: UIControl {
             }
             x += dotSize + dotSpacing
         }
-        
-        // restore the context
-        CGContextRestoreGState(context)
     }
     
     //MARK: Utilities
@@ -165,9 +166,9 @@ class CSPageControl: UIControl {
     }
     
     func sizeForNumberOfPages() -> CGSize {
-        var floatPages : CGFloat = CGFloat(numberOfPages)
-        var width : CGFloat = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
-        var height : CGFloat = max(44, dotSize + 4)
+        var floatPages = CGFloat(numberOfPages)
+        var width = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
+        var height = max(44, dotSize + 4)
         return CGSize(width: width, height: height)
     }
     
@@ -185,8 +186,8 @@ class CSPageControl: UIControl {
     //MARK: Touch Handling
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         // find touch location
-        var theTouch : UITouch = touches.first as! UITouch
-        var touchLocation : CGPoint = theTouch.locationInView(self)
+        var theTouch = touches.first as! UITouch
+        var touchLocation = theTouch.locationInView(self)
         
         // check whether the touch is on the right or left
         if (touchLocation.x < (self.bounds.size.width / 2)) {
