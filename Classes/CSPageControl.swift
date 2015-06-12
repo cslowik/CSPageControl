@@ -8,41 +8,49 @@
 
 import UIKit
 
-enum CSPageControlStyle : Int {
+enum CSPageControlStyle: Int {
     case Filled     = 0
     case Outline    = 1
     case Image      = 2
 }
 
-enum CSPageControlImage : String {
+enum CSPageControlImage: String {
     case StarFilled     = "starFilled"
     case StarOutline    = "starOutline"
+}
+
+enum CSPageControlAnimation: Int {
+    case None       = 0
+    case Slide      = 1
+    case Drain      = 2
+    case Fade       = 3
 }
 
 class CSPageControl: UIControl {
     
     //MARK: Page Control Properties
-    var numberOfPages : NSInteger           = 1 {
+    var numberOfPages: NSInteger           = 1 {
         didSet {
-            var newSize : CGSize = self.sizeForNumberOfPages()
+            var newSize: CGSize = self.sizeForNumberOfPages()
             self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: newSize.width, height: newSize.height)
             self.updateCurrentPageDisplay()
         }
     }
-    var currentPage : NSInteger             = 0
-    var hidesForSinglePage : Bool           = false
-    var defersCurrentPageDisplay : Bool     = false
+    var currentPage: NSInteger             = 0
+    var hidesForSinglePage: Bool           = false
+    var defersCurrentPageDisplay: Bool     = false
     
     //MARK: CSPageControl Properties
-    var dotSpacing : CGFloat                = 14.0
-    var dotSize : CGFloat                   = 6.0
-    var lineWidth : CGFloat                 = 1.0
-    var activeStyle : CSPageControlStyle    = CSPageControlStyle.Filled
-    var inactiveStyle : CSPageControlStyle  = CSPageControlStyle.Outline
-    var activeColor : UIColor               = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
-    var inactiveColor : UIColor             = UIColor(red:0.796,  green:0.816,  blue:0.827, alpha:1)
-    var activeImage : UIImage?
-    var inactiveImage : UIImage?
+    var dotSpacing: CGFloat                = 14.0
+    var dotSize: CGFloat                   = 6.0
+    var lineWidth: CGFloat                 = 1.0
+    var activeStyle: CSPageControlStyle    = CSPageControlStyle.Filled
+    var inactiveStyle: CSPageControlStyle  = CSPageControlStyle.Outline
+    var activeColor: UIColor               = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
+    var inactiveColor: UIColor             = UIColor(red:0.796,  green:0.816,  blue:0.827, alpha:1)
+    var activeImage: UIImage?
+    var inactiveImage: UIImage?
+    var animationStyle: CSPageControlAnimation = CSPageControlAnimation.None
     
     //MARK: Lifecycle
     convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle) {
@@ -145,7 +153,6 @@ class CSPageControl: UIControl {
             x += dotSize + dotSpacing
         }
         
-        
         // restore the context
         CGContextRestoreGState(context)
     }
@@ -190,5 +197,7 @@ class CSPageControl: UIControl {
         }
         self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
     }
+    
+    //MARK: Animation
     
 }
