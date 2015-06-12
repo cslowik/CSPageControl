@@ -5,21 +5,21 @@ Simple swift page control with options for various drawn styles or user-supplied
 
 ## Enums
 CSPageControlStyle defines the available styles for the dots. These styles can be used for either active or inactive states.
-```
+``` swift
 CSPageControlStyle.Filled     // filled dot
 CSPageControlStyle.Outline    // outline dot
 CSPageControlStyle.Image      // image-based dot
 ```
 
 CSPageControlImage defines image names for the included images.
-```
+``` swift
 CSPageControlImage.StarFilled     // filled star image
 CSPageControlImage.StarOutline    // outline star image
 ```
 
 ## Initializers
 There are four custom initializers available.
-```
+``` swift
 CSPageControl(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle)
 CSPageControl(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle, dotSize: CGFloat, dotSpacing: CGFloat)
 CSPageControl(activeImage: UIImage, inactiveImage: UIImage)
@@ -28,7 +28,7 @@ CSPageControl(activeImage: UIImage, inactiveImage: UIImage, dotSpacing: CGFloat)
 There are a few other properties that can be changed or accessed, but these are the basics that define the look of the page control.
 
 ## Properties
-```
+``` swift
 CSPageControl.numberOfPages   // max pages. control adjusts size based on this property
 CSPageControl.currentPage     // the current page
 
