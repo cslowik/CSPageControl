@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var activeStylePicker: UISegmentedControl!
     @IBOutlet weak var inactiveStylePicker: UISegmentedControl!
     @IBOutlet weak var strokeWidthSlider: UISlider!
+    @IBOutlet weak var dotSizeSlider: UISlider!
+    @IBOutlet weak var dotSpacingSlider: UISlider!
+    @IBOutlet weak var touchToggle: UISwitch!
+    @IBOutlet weak var gestureReceiver: UIView!
     
     var pageControl : CSPageControl = CSPageControl(activeImage: UIImage(named: "starFilled")!, inactiveImage: UIImage(named: "starOutline")!)
     
@@ -28,8 +32,8 @@ class ViewController: UIViewController {
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeLeft)
-        self.view.addGestureRecognizer(swipeRight)
+        self.gestureReceiver.addGestureRecognizer(swipeLeft)
+        self.gestureReceiver.addGestureRecognizer(swipeRight)
     }
 
     override func viewDidLayoutSubviews() {
@@ -97,6 +101,19 @@ class ViewController: UIViewController {
     @IBAction func strokeWIdthChanged(sender: AnyObject) {
         pageControl.lineWidth = CGFloat(strokeWidthSlider.value)
         pageControl.setNeedsDisplay()
+    }
+    
+    @IBAction func dotSizeChanged(sender: AnyObject) {
+        pageControl.dotSize = CGFloat(dotSizeSlider.value)
+        pageControl.setNeedsDisplay()
+    }
+    
+    @IBAction func dotSpacingChanged(sender: AnyObject) {
+        pageControl.dotSpacing = CGFloat(dotSpacingSlider.value)
+        pageControl.setNeedsDisplay()
+    }
+    @IBAction func touchToggleChanged(sender: AnyObject) {
+        pageControl.userInteractionEnabled = touchToggle.on
     }
 }
 

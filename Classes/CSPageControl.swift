@@ -37,6 +37,7 @@ class CSPageControl: UIControl {
         }
     }
     var currentPage                         = 0
+    var previousPage                        = 0
     var hidesForSinglePage                  = false
     var defersCurrentPageDisplay            = false
     
@@ -95,7 +96,8 @@ class CSPageControl: UIControl {
     }
 
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.backgroundColor = UIColor.clearColor()
     }
     
     override init(frame: CGRect) {
