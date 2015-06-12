@@ -1,7 +1,7 @@
 # CSPageControl
 Simple swift page control with options for various drawn styles or user-supplied images. Usage is based on UIPageControl, but with more control over appearance.
 
-![alt tag](http://slowik.me/images/cspagecontrol.gif)
+![alt tag](http://slowik.me/images/demo.gif)
 
 ## Enums
 CSPageControlStyle defines the available styles for the dots. These styles can be used for either active or inactive states.
