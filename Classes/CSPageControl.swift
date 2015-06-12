@@ -29,25 +29,25 @@ enum CSPageControlAnimation: Int {
 class CSPageControl: UIControl {
     
     //MARK: Page Control Properties
-    var numberOfPages: NSInteger           = 1 {
+    var numberOfPages                       = 1 {
         didSet {
             var newSize = self.sizeForNumberOfPages()
             self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: newSize.width, height: newSize.height)
             self.updateCurrentPageDisplay()
         }
     }
-    var currentPage: NSInteger             = 0
-    var hidesForSinglePage: Bool           = false
-    var defersCurrentPageDisplay: Bool     = false
+    var currentPage                         = 0
+    var hidesForSinglePage                  = false
+    var defersCurrentPageDisplay            = false
     
     //MARK: CSPageControl Properties
-    var dotSpacing: CGFloat                = 14.0
-    var dotSize: CGFloat                   = 6.0
-    var lineWidth: CGFloat                 = 1.0
-    var activeStyle: CSPageControlStyle    = CSPageControlStyle.Filled
-    var inactiveStyle: CSPageControlStyle  = CSPageControlStyle.Outline
-    var activeColor: UIColor               = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
-    var inactiveColor: UIColor             = UIColor(red:0.796,  green:0.816,  blue:0.827, alpha:1)
+    var dotSpacing: CGFloat                 = 14.0
+    var dotSize: CGFloat                    = 6.0
+    var lineWidth: CGFloat                  = 1.0
+    var activeStyle: CSPageControlStyle     = CSPageControlStyle.Filled
+    var inactiveStyle: CSPageControlStyle   = CSPageControlStyle.Outline
+    var activeColor: UIColor                = UIColor(red:0.290,  green:0.639,  blue:0.875, alpha:1)
+    var inactiveColor: UIColor              = UIColor(red:0.796,  green:0.816,  blue:0.827, alpha:1)
     var activeImage: UIImage?
     var inactiveImage: UIImage?
     var animationStyle: CSPageControlAnimation = CSPageControlAnimation.None
@@ -165,6 +165,12 @@ class CSPageControl: UIControl {
         }
     }
     
+    func updateCurrentPageDisplay(previousPage: NSInteger, nextPage: NSInteger) {
+        if (!defersCurrentPageDisplay) {
+            self.setNeedsDisplay()
+        }
+    }
+    
     func sizeForNumberOfPages() -> CGSize {
         var floatPages = CGFloat(numberOfPages)
         var width = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
@@ -174,13 +180,15 @@ class CSPageControl: UIControl {
     
     //MARK: Page Changers
     func incrementPage() {
+        var previousPage = currentPage
         currentPage = (currentPage < (numberOfPages - 1)) ? (currentPage + 1) : (numberOfPages - 1)
-        updateCurrentPageDisplay()
+        updateCurrentPageDisplay(previousPage, nextPage: currentPage)
     }
     
     func decrementPage() {
+        var previousPage = currentPage
         currentPage = (currentPage > 0) ? (currentPage - 1) : 0
-        updateCurrentPageDisplay()
+        updateCurrentPageDisplay(previousPage, nextPage: currentPage)
     }
 
     //MARK: Touch Handling
@@ -191,10 +199,10 @@ class CSPageControl: UIControl {
         
         // check whether the touch is on the right or left
         if (touchLocation.x < (self.bounds.size.width / 2)) {
-            currentPage = (currentPage > 0) ? currentPage-- : numberOfPages
+            decrementPage()
         }
         else {
-            currentPage = (currentPage < (numberOfPages - 1)) ? currentPage++ : 0
+            incrementPage()
         }
         self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
     }
