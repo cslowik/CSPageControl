@@ -118,28 +118,32 @@ class CSPageControl: UIControl {
         for (var i = 0; i < numberOfPages; i++) {
             var dotFrame = CGRectMake(x, y, dotSize, dotSize)
             if (i == currentPage) {
-                // drawdotwithstyle
+                var newDot = drawDotWithStyle(activeStyle, dotFrame: dotFrame, isActive: true)
+                shapeLayers.append(newDot)
             } else {
-                // drawdotwithstyle
+                var newDot = drawDotWithStyle(inactiveStyle, dotFrame: dotFrame, isActive: false)
+                shapeLayers.append(newDot)
             }
             x += dotSize + dotSpacing
         }
     }
     
     func drawDotWithStyle(dotStyle:CSPageControlStyle, dotFrame:CGRect, isActive:Bool) -> CAShapeLayer {
+        // create shape layer
+        let dotLayer = CAShapeLayer()
+        dotLayer.frame = dotFrame
+        dotLayer.fillColor = isActive ? activeColor.CGColor : inactiveColor.CGColor
         
         switch dotStyle {
         case .Filled:
             // Draw filled circle
             var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
-            activeColor.setFill()
             circlePath.fill()
             break
             
         case .Outline:
             // Draw stroked circle
             var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
-            activeColor.setStroke()
             circlePath.lineWidth = lineWidth
             circlePath.stroke()
             break
@@ -148,6 +152,7 @@ class CSPageControl: UIControl {
             activeImage!.drawInRect(dotFrame)
         }
     
+        return dotLayer
     }
     
     //MARK: Utilities
