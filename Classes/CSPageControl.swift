@@ -52,6 +52,7 @@ class CSPageControl: UIControl {
     var activeImage: UIImage?
     var inactiveImage: UIImage?
     var animationStyle: CSPageControlAnimation = CSPageControlAnimation.None
+    var shapeLayers                         = [CAShapeLayer]()
     
     //MARK: Lifecycle
     convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle) {
@@ -107,57 +108,46 @@ class CSPageControl: UIControl {
     
     //MARK: Drawing
     override func drawRect(rect: CGRect) {
+        
         var currentBounds = self.bounds
         var totalWidth = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
         var x = CGRectGetMidX(currentBounds) - (totalWidth / 2)
         var y = CGRectGetMidY(currentBounds) - (dotSize / 2)
+        var dotFrame = CGRectMake(x, y, dotSize, dotSize)
         
         for (var i = 0; i < numberOfPages; i++) {
             var dotFrame = CGRectMake(x, y, dotSize, dotSize)
             if (i == currentPage) {
-                switch activeStyle {
-                case .Filled:
-                    // Draw filled circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
-                    activeColor.setFill()
-                    circlePath.fill()
-                    break
-                    
-                case .Outline:
-                    // Draw stroked circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
-                    activeColor.setStroke()
-                    circlePath.lineWidth = lineWidth
-                    circlePath.stroke()
-                    break
-                    
-                case .Image:
-                    activeImage!.drawInRect(dotFrame)
-                }
+                // drawdotwithstyle
             } else {
-                switch inactiveStyle {
-                case .Filled:
-                    // Draw filled circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
-                    inactiveColor.setFill()
-                    circlePath.fill()
-                    break
-                    
-                case .Outline:
-                    // Draw stroked circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
-                    inactiveColor.setStroke()
-                    circlePath.lineWidth = lineWidth
-                    circlePath.stroke()
-                    break
-                    
-                case .Image:
-                    inactiveImage!.drawInRect(dotFrame)
-                    break
-                }
+                // drawdotwithstyle
             }
             x += dotSize + dotSpacing
         }
+    }
+    
+    func drawDotWithStyle(dotStyle:CSPageControlStyle, dotFrame:CGRect, isActive:Bool) -> CAShapeLayer {
+        
+        switch dotStyle {
+        case .Filled:
+            // Draw filled circle
+            var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
+            activeColor.setFill()
+            circlePath.fill()
+            break
+            
+        case .Outline:
+            // Draw stroked circle
+            var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+            activeColor.setStroke()
+            circlePath.lineWidth = lineWidth
+            circlePath.stroke()
+            break
+            
+        case .Image:
+            activeImage!.drawInRect(dotFrame)
+        }
+    
     }
     
     //MARK: Utilities
