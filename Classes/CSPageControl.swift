@@ -31,7 +31,7 @@ class CSPageControl: UIControl {
     //MARK: Page Control Properties
     var numberOfPages                       = 1 {
         didSet {
-            var newSize = self.sizeForNumberOfPages()
+            let newSize = self.sizeForNumberOfPages()
             self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: newSize.width, height: newSize.height)
             self.updateCurrentPageDisplay()
         }
@@ -55,13 +55,13 @@ class CSPageControl: UIControl {
     
     //MARK: Lifecycle
     convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle) {
-        self.init(frame: CGRect.zeroRect)
+        self.init(frame: CGRect.zero)
         self.activeStyle = activeStyle
         self.inactiveStyle = inactiveStyle
     }
     
     convenience init(activeStyle: CSPageControlStyle, inactiveStyle: CSPageControlStyle, dotSize: CGFloat, dotSpacing: CGFloat) {
-        self.init(frame: CGRect.zeroRect)
+        self.init(frame: CGRect.zero)
         self.activeStyle = activeStyle
         self.inactiveStyle = inactiveStyle
         self.dotSize = dotSize
@@ -69,33 +69,33 @@ class CSPageControl: UIControl {
     }
     
     convenience init(activeImage: UIImage, inactiveImage: UIImage) {
-        self.init(frame: CGRect.zeroRect)
+        self.init(frame: CGRect.zero)
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
         
         self.activeStyle = CSPageControlStyle.Image
         self.inactiveStyle = CSPageControlStyle.Image
         
-        var activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
-        var inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
+        let activeSize : CGFloat = max(activeImage.size.width, activeImage.size.height)
+        let inactiveSize : CGFloat = max(inactiveImage.size.width, inactiveImage.size.height)
         self.dotSize = max(activeSize, inactiveSize)
     }
     
     convenience init(activeImage: UIImage, inactiveImage: UIImage, dotSpacing: CGFloat) {
-        self.init(frame: CGRect.zeroRect)
+        self.init(frame: CGRect.zero)
         self.activeImage = activeImage
         self.inactiveImage = inactiveImage
         self.activeStyle = CSPageControlStyle.Image
         self.inactiveStyle = CSPageControlStyle.Image
         
-        var activeSize = max(activeImage.size.width, activeImage.size.height)
-        var inactiveSize = max(inactiveImage.size.width, inactiveImage.size.height)
+        let activeSize = max(activeImage.size.width, activeImage.size.height)
+        let inactiveSize = max(inactiveImage.size.width, inactiveImage.size.height)
         
         self.dotSpacing = dotSpacing
         self.dotSize = max(activeSize, inactiveSize)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.backgroundColor = UIColor.clearColor()
     }
@@ -107,25 +107,25 @@ class CSPageControl: UIControl {
     
     //MARK: Drawing
     override func drawRect(rect: CGRect) {
-        var currentBounds = self.bounds
-        var totalWidth = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
+        let currentBounds = self.bounds
+        let totalWidth = CGFloat(numberOfPages) * dotSize + CGFloat(max(0, numberOfPages - 1)) * dotSpacing
         var x = CGRectGetMidX(currentBounds) - (totalWidth / 2)
-        var y = CGRectGetMidY(currentBounds) - (dotSize / 2)
+        let y = CGRectGetMidY(currentBounds) - (dotSize / 2)
         
         for (var i = 0; i < numberOfPages; i++) {
-            var dotFrame = CGRectMake(x, y, dotSize, dotSize)
+            let dotFrame = CGRectMake(x, y, dotSize, dotSize)
             if (i == currentPage) {
                 switch activeStyle {
                 case .Filled:
                     // Draw filled circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
+                    let circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
                     activeColor.setFill()
                     circlePath.fill()
                     break
                     
                 case .Outline:
                     // Draw stroked circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    let circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
                     activeColor.setStroke()
                     circlePath.lineWidth = lineWidth
                     circlePath.stroke()
@@ -138,14 +138,14 @@ class CSPageControl: UIControl {
                 switch inactiveStyle {
                 case .Filled:
                     // Draw filled circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
+                    let circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, -0.5, -0.5))
                     inactiveColor.setFill()
                     circlePath.fill()
                     break
                     
                 case .Outline:
                     // Draw stroked circle
-                    var circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
+                    let circlePath = UIBezierPath(ovalInRect: CGRectInset(dotFrame, (lineWidth / 2), (lineWidth / 2)))
                     inactiveColor.setStroke()
                     circlePath.lineWidth = lineWidth
                     circlePath.stroke()
@@ -174,30 +174,30 @@ class CSPageControl: UIControl {
     }
     
     func sizeForNumberOfPages() -> CGSize {
-        var floatPages = CGFloat(numberOfPages)
-        var width = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
-        var height = max(44, dotSize + 4)
+        let floatPages = CGFloat(numberOfPages)
+        let width = (floatPages * dotSize) + (floatPages - 1) * (dotSpacing + 44)
+        let height = max(44, dotSize + 4)
         return CGSize(width: width, height: height)
     }
     
     //MARK: Page Changers
     func incrementPage() {
-        var previousPage = currentPage
+        let previousPage = currentPage
         currentPage = (currentPage < (numberOfPages - 1)) ? (currentPage + 1) : (numberOfPages - 1)
         updateCurrentPageDisplay(previousPage, nextPage: currentPage)
     }
     
     func decrementPage() {
-        var previousPage = currentPage
+        let previousPage = currentPage
         currentPage = (currentPage > 0) ? (currentPage - 1) : 0
         updateCurrentPageDisplay(previousPage, nextPage: currentPage)
     }
 
     //MARK: Touch Handling
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // find touch location
-        var theTouch = touches.first as! UITouch
-        var touchLocation = theTouch.locationInView(self)
+        let theTouch = touches.first
+        let touchLocation = theTouch!.locationInView(self)
         
         // check whether the touch is on the right or left
         if (touchLocation.x < (self.bounds.size.width / 2)) {
