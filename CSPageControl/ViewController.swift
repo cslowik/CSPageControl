@@ -28,9 +28,9 @@ class ViewController: UIViewController {
         pageControl.inactiveStyle = CSPageControlStyle.Outline
         self.view.addSubview(pageControl)
         
-        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        var swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.gestureReceiver.addGestureRecognizer(swipeLeft)
         self.gestureReceiver.addGestureRecognizer(swipeRight)
