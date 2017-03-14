@@ -24,14 +24,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         pageControl.numberOfPages = 5
         pageControl.dotSize = 12
-        pageControl.activeStyle = CSPageControlStyle.Filled
-        pageControl.inactiveStyle = CSPageControlStyle.Outline
+        pageControl.activeStyle = CSPageControlStyle.filled
+        pageControl.inactiveStyle = CSPageControlStyle.outline
         self.view.addSubview(pageControl)
         
-        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        var swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(_:)))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.gestureReceiver.addGestureRecognizer(swipeLeft)
         self.gestureReceiver.addGestureRecognizer(swipeRight)
     }
@@ -46,34 +46,35 @@ class ViewController: UIViewController {
     }
     
     //MARK: Gesture Recognition
-    func didSwipe(sender: UIGestureRecognizer) {
-        if (sender.isMemberOfClass(UISwipeGestureRecognizer)) {
-            switch ((sender as! UISwipeGestureRecognizer).direction) {
-            case (UISwipeGestureRecognizerDirection.Left):
-                pageControl.incrementPage()
-                break
-            case (UISwipeGestureRecognizerDirection.Right):
-                pageControl.decrementPage()
-                break
-            default:
-                break
-            }
-            pageControl.updateCurrentPageDisplay()
+    func didSwipe(_ sender: UIGestureRecognizer) {
+        guard sender.isMember(of: UISwipeGestureRecognizer.self) else {
+            return
         }
+        switch ((sender as! UISwipeGestureRecognizer).direction) {
+        case (UISwipeGestureRecognizerDirection.left):
+            pageControl.incrementPage()
+            break
+        case (UISwipeGestureRecognizerDirection.right):
+            pageControl.decrementPage()
+            break
+        default:
+            break
+        }
+        pageControl.updateCurrentPageDisplay()
     }
     
     //MARK: IBActions
 
-    @IBAction func didTapActiveStyle(sender: AnyObject) {
+    @IBAction func didTapActiveStyle(_ sender: AnyObject) {
         switch activeStylePicker.selectedSegmentIndex {
         case 0:
-            pageControl.activeStyle = CSPageControlStyle.Filled
+            pageControl.activeStyle = CSPageControlStyle.filled
             break
         case 1:
-            pageControl.activeStyle = CSPageControlStyle.Outline
+            pageControl.activeStyle = CSPageControlStyle.outline
             break
         case 2:
-            pageControl.activeStyle = CSPageControlStyle.Image
+            pageControl.activeStyle = CSPageControlStyle.image
             break
         default:
             break
@@ -81,16 +82,16 @@ class ViewController: UIViewController {
         pageControl.setNeedsDisplay()
     }
     
-    @IBAction func didTapInactiveStyle(sender: AnyObject) {
+    @IBAction func didTapInactiveStyle(_ sender: AnyObject) {
         switch inactiveStylePicker.selectedSegmentIndex {
         case 0:
-            pageControl.inactiveStyle = CSPageControlStyle.Filled
+            pageControl.inactiveStyle = CSPageControlStyle.filled
             break
         case 1:
-            pageControl.inactiveStyle = CSPageControlStyle.Outline
+            pageControl.inactiveStyle = CSPageControlStyle.outline
             break
         case 2:
-            pageControl.inactiveStyle = CSPageControlStyle.Image
+            pageControl.inactiveStyle = CSPageControlStyle.image
             break
         default:
             break
@@ -98,22 +99,22 @@ class ViewController: UIViewController {
         pageControl.setNeedsDisplay()
     }
     
-    @IBAction func strokeWIdthChanged(sender: AnyObject) {
+    @IBAction func strokeWIdthChanged(_ sender: AnyObject) {
         pageControl.lineWidth = CGFloat(strokeWidthSlider.value)
         pageControl.setNeedsDisplay()
     }
     
-    @IBAction func dotSizeChanged(sender: AnyObject) {
+    @IBAction func dotSizeChanged(_ sender: AnyObject) {
         pageControl.dotSize = CGFloat(dotSizeSlider.value)
         pageControl.setNeedsDisplay()
     }
     
-    @IBAction func dotSpacingChanged(sender: AnyObject) {
+    @IBAction func dotSpacingChanged(_ sender: AnyObject) {
         pageControl.dotSpacing = CGFloat(dotSpacingSlider.value)
         pageControl.setNeedsDisplay()
     }
-    @IBAction func touchToggleChanged(sender: AnyObject) {
-        pageControl.userInteractionEnabled = touchToggle.on
+    @IBAction func touchToggleChanged(_ sender: AnyObject) {
+        pageControl.isUserInteractionEnabled = touchToggle.isOn
     }
 }
 
