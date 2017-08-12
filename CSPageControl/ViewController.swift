@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     }
     
     //MARK: Gesture Recognition
-    func didSwipe(_ sender: UIGestureRecognizer) {
+    @objc func didSwipe(_ sender: UIGestureRecognizer) {
         guard sender.isMember(of: UISwipeGestureRecognizer.self) else {
             return
         }
